@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>CSHCA - Cloud Software &amp; Hardware Converaged Architecture</title>
-    <link>http://cshca.github.io/</link>
-    <description>Recent content on CSHCA - Cloud Software &amp; Hardware Converaged Architecture</description>
+    <title>博文 on CSHCA - Cloud Software &amp; Hardware Converaged Architecture</title>
+    <link>http://cshca.github.io/categories/%E5%8D%9A%E6%96%87/</link>
+    <description>Recent content in 博文 on CSHCA - Cloud Software &amp; Hardware Converaged Architecture</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 05 Oct 2020 15:24:42 +0800</lastBuildDate><atom:link href="http://cshca.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 05 Oct 2020 15:24:42 +0800</lastBuildDate><atom:link href="http://cshca.github.io/categories/%E5%8D%9A%E6%96%87/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试发布</title>
       <link>http://cshca.github.io/post/new-post/</link>
