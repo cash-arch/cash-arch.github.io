@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>云计算底层架构挑战（一） - CSHCA - Cloud Software &amp; Hardware Converaged Architecture</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cshca" /><meta name="description" content="" /><meta name="keywords" content="cloud, software, hardware, converaged, architecture" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
+
+
+<link rel="canonical" href="http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%80/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.319b99293182aa5d023be568b3d5d2020f5693f288f58e6bd3e0b5457df8bdc1.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="云计算底层架构挑战（一）" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%80/" />
+<meta property="article:published_time" content="2020-10-05T16:21:14+08:00" />
+<meta property="article:modified_time" content="2020-10-05T16:21:14+08:00" />
+<meta itemprop="name" content="云计算底层架构挑战（一）">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2020-10-05T16:21:14+08:00" />
+<meta itemprop="dateModified" content="2020-10-05T16:21:14+08:00" />
+<meta itemprop="wordCount" content="8041">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="云计算底层架构挑战（一）"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">软硬件融合</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">文章</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">软硬件融合</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">文章</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">云计算底层架构挑战（一）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-05 </span>
+        
+        
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      <p>  IT行业变化太快，不变的唯有变化。云计算是互联网的底层技术和基础设施，在传统互联网、物联网、人工智能、大数据、产业互联网等领域扮演着越来越重要的角色，各种云计算产品和服务层出不穷，快速更迭。软件技术日新月异的大踏步发展，而相应的硬件架构却没有本质的改变，例如支撑云端系统运行的依然是以CPU为核心的通用服务器。
+  随着云计算商业模式越来越趋于成熟，基于通用服务器的各种云计算产品服务越来越受到性能、效率以及成本的压力；云计算行业规模不断扩大，主流的云计算厂家所拥有的数百万台服务器的规模；以及云计算面向特定场景的产品服务。这些因素共同决定了云计算需要更深层次的软硬件创新。</p>
+<p>#1 基于分层的云计算服务</p>
+<p><img src="/img/202010/%E4%BA%91%E8%AE%A1%E7%AE%97IaaS%E3%80%81PaaS%E3%80%81SaaS%E5%88%86%E5%B1%82.png" alt="云计算IaaS、PaaS、SaaS分层"></p>
+<center>图1 云计算IaaS、PaaS、SaaS分层</center>
+&emsp;&emsp;如图1，云计算是基于分层的结构，三种主要类型包括IaaS（Infrastructure as a Service）、PaaS（Platform as a Service）和SaaS（Software as a Service）：
+<ul>
+<li>IaaS：IaaS包含云IT的基本构建块。它通常提供对网络功能、计算机（虚拟或专用硬件）和数据存储空间的访问。</li>
+<li>PaaS：PaaS让用户无需管理底层基础设施（一般是硬件和操作系统），从而可以将更多精力放在应用程序的部署和管理上面。</li>
+<li>SaaS：SaaS提供了一种完善的产品，其运行和管理皆由服务提供商负责。在大多数情况下，人们所说的SaaS指的是最终用户应用程序（如基于Web的电子邮件）。</li>
+</ul>
+<p>  PaaS层、SaaS层的服务都是基于IaaS层的最基础的服务。IaaS层包括计算、存储和网络这三大基础类服务（数据库类服务是基于三大基础类服务构建的上层服务）。以UCloud的产品为例，IaaS层典型服务有：</p>
+<ul>
+<li>计算类：UHost云主机服务等；</li>
+<li>存储类：UDISK块存储云硬件服务，UFile对象存储服务，UArchive冷存储服务等；</li>
+<li>网络类：UVPC私有网络服务，ULB负载均衡服务等；</li>
+</ul>
+<p>#2 云计算的特点
+##2.1 更大的规模
+###优化硬件成本
+  云计算数据中心规模越来越大，庞大的服务器数量，任何一点小的优化，哪怕1%，都可以帮助客户节省数以亿计的成本。正因为如此，对服务器也提出了很多新的要求，各家互联网巨头都开启了各种不同的定制硬件道路。例如Google，大部分服务器都是自家设计，采用定制化托盘，内建电池做备用电源，相比传统服务器成本和耗电要低得多，为Google节省了大笔的电力开支。例如，由Facebook携手英特尔等公司于2011年成立的OCP开放计算项目，旨在通过开源硬件技术快速提升数据中心技术和运营等方面的创新步伐。OCP一直围绕网络、服务器、存储设备和Open Rack等展开创新工作, 推动以开放硬件及软件的形式促进整个生态的发展。
+  通用性服务器由于要适应多种应用，比如要兼顾性能、扩展性，而难以兼顾能耗和成本。于是，为云计算而定制的“云服务器”应用而生。云服务器将硬件资源更加充分的利用，量体裁衣，避免硬件资源的浪费。相比传统服务器，云计算服务器需要大规模部署，因此要求服务器具有更高的部署密度、更加的节能并且易于管理：</p>
+<ul>
+<li>
+<p>高密度：云计算数据中心越来越大，而土地则寸土寸金，机房空间捉襟见肘，如何在有限空间容纳更多的计算节点和资源是发展关键。</p>
+</li>
+<li>
+<p>低能耗：云数据数据中心建设成本中电力设备和空调系统投资比重达到65%，而数据中心运营成本中75%将是能源成本。可见，能耗的降低对数据中心而言是极其重要的工作，而云计算服务器则是能耗的核心。</p>
+</li>
+<li>
+<p>易管理：数量庞大的服务器管理起来是个很大问题，通过云平台管理系统、服务器管理接口实现轻松部署和管理则是云计算中心发展必须考虑的因素。</p>
+</li>
+</ul>
+<p>###系统的内涵和外延
+  服务器是数据中心基本的节点，通过交换机把服务器连接到一起。通过虚拟化技术，我们把物理的单个服务器拆分成逻辑的多个虚拟的服务器，然后再通过复杂的网络逻辑，把这些虚拟服务器连接在一起。在这个网络中，单个的虚拟服务器节点就是一个系统。它包含了芯片、主板、板卡、电源以及机箱等硬件，也包含运行于硬件之上的软件，还包括根据场景而运行的各种算法和策略，以及要进行处理和存储的数据等等。
+  我们把硬件、软件、算法、数据等比作一个点，把硬件、软件、算法和数据连接到一起的系统则是一条线，那么组成互联网业务的服务器集群则构成一张网，一个宏系统。进一步的，数据中心里多种业务交互共存的体系则是多种宏系统的叠加。我们要考虑的不仅仅是网内的节点之间相互影响，还要考虑不同的网之间的跨网相互影响。
+  例如，数据中心规模庞大，假设单个服务器每天万分之一的故障率，那么整个数据中心每天将有数百起故障发生，那么硬件层面的稳定性和高可用设计则是解决这一问题的关键。再例如，AWS当前有400多万台（估算，可能还在动态增加中）服务器，加上虚拟化的支持，数千万个计算节点，需要把这千万级的节点划分到数以十万计的VPC里，并且要考虑跨VPC、跨域访问的问题，还要考虑VPC动态变更的问题，千万级的服务器虚拟网络系统将是一个巨大的挑战。
+  一旦和宏观的规模相联系，需求就不单单是单机个体系统的业务场景，还包括宏观系统的内联和外延。需要在更宏观的高度，系统性的思考业务场景，并落实到个体“线”和“点”的设计中去。
+##2.2 更“大”的数据
+<img src="/img/202010/IDC%E9%A2%84%E6%B5%8B%E7%9A%84%E5%85%A8%E7%90%83%E6%95%B0%E6%8D%AE%E6%8C%89%E5%B9%B4%E5%A2%9E%E5%8A%A0%E9%87%8F.png" alt="IDC预测的全球数据按年增加量"></p>
+<center>图2 IDC预测的全球数据按年增加量</center>
+&emsp;&emsp;数据的使用正在改变我们的生活、工作和娱乐方式。全球各行各业的企业都在使用数据来改变自身，使自身变得更加敏捷，通过数据改善客户体验，引入新的业务模型并发掘新的竞争优势。消费者生活在一个日益数字化的世界中，依靠在线和移动网络与朋友和家人联系、访问商品和服务，几乎生活的方方面面都已经数字化，甚至包括睡觉的时候。对数据日益依赖的结果使得全球数据规模日益增长。如图2所示，IDC预测，到2025年，全球数据领域将增长到175 ZB。
+&emsp;&emsp;IDC定义了发生数字化和创建数字内容的三个主要位置：核心、边缘和终端。具体定义如下：
+<ul>
+<li>核心（Core）。它由企业和云提供商中的指定计算数据中心组成。它包括所有类型的云计算，包括公共云、私有云和混合云。它还包括企业运营数据中心，例如那些运行电网和电话网络的数据中心。</li>
+<li>边缘（Edge）。边缘是指不在核心数据中心中的经过企业强化的服务器和设备。包括服务器机房、现场服务器、基站和位于区域的较小数据中心，以加快响应速度。</li>
+<li>终端（Endpoint）。终端包括网络边缘上的所有设备，包括PC、电话、工业传感器、联网的汽车和可穿戴设备等。
+<img src="/img/202010/%E6%95%B0%E6%8D%AE%E4%BA%A7%E7%94%9F%E5%92%8C%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%89%E4%B8%AA%E5%8C%BA%E5%9F%9F%E7%9A%84%E5%8D%A0%E6%AF%94.png" alt="数据产生和存储的三个区域的占比"></li>
+</ul>
+<center>图3 数据产生和存储的三个区域的占比</center>
+&emsp;&emsp;如图3所示，从数据产生的规模角度来看，终端所占百分比是逐步下降的，而核心和边缘的数据产生的规模占比则越来越多。从数据存储角度来看，终端存储的数据量将随着时间逐步的转向核心，使得核心成为所有类型数据的首选存储库。到2024年，IDC预计数据存储在核心的数据占比将增加一倍以上。随着对延迟敏感的服务和应用程序在全球范围内的普及，边缘存储也将实现显著增长。
+&emsp;&emsp;摩尔定律已经走向尽头，但是数据量却还在爆炸式增长，这么多数据的产生、传输、处理、存储、分析等等，都将对硬件的性能、带宽、延时、空间、功耗、成本等构成庞大的挑战。要想应对大数据时代的挑战，有赖于体系结构更深层次创新。
+##2.3 更复杂的网络
+###动态的网络变化
+&emsp;&emsp;单个数据中心服务器规模可以达到数十万台，如此大规模服务器集群需要数千台网络设备连接在一起。这种大规模的数据中心网络管理难度大，网络运行故障定位难，运维成本非常高。云计算是多租户模式，不同的租户业务之间是要完全隔离的，数据中心通过虚拟网络来实现不同租户网络域的隔离。租户以及租户的资源一直处在一个动态的变化中，这更加剧了网络变化的频次和难度。大规模服务器不可避免会发生故障，数据中心要保证用户服务的高可用，用户业务在不同的物理服务器之间迁移也会影响网络的变化。并且，随着互联网上层业务日新月异的变化，上层业务变化也会影响网络的变化。
+###更低的延迟
+&emsp;&emsp;Akami的一项研究表明，页面加载速度的延迟一秒会导致转化率平均下降7％，页面浏览量下降11％，客户满意度下降16％ 。在金融业中，即使是一毫秒的延迟也会对高速交易算法的性能产生巨大影响。金融业对延迟的敏感性的一个案例是，某公司投资了4亿多美元，只是为了将纽约和伦敦之间的传输时间缩短5毫秒。
+&emsp;&emsp;在线事务处理（OLTP）的工作负载主要由南北流量控制，客户端请求，然后服务器响应，通过相对简单的三层网络结构就能得到很好的服务。但是，随着社交媒体和移动应用程序的爆炸性增长，流量模式已从南北（在客户端和数据中心之间）转变为东西向（数据中心内的流量）。据估计，单个在线查询可以在数据中心内生成数百甚至数千个请求。这意味着可能需要成功完成数千个任务，然后才能响应来自客户端的请求。在这种环境下，即使数千个任务同时执行，即使需要花费较长时间的响应相对少见，但其仍然最终决定了服务的总体响应时间。
+###更大的带宽
+&emsp;&emsp;前面我们讲了大数据的迅猛发展，数据量越来越大，网络传输的带宽也在快速升级。叠加数据中心东西向流量，英特尔估计，数据中心内部的流量每年以25％的速度增长。当前数据中心大规模商用的主流的数据带宽是25Gbps，预计未来两三年内，将逐步过渡到100Gbps。
+&emsp;&emsp;带宽逐步增大，意味着许多现有的网络数据处理架构会逐渐无法满足如此高性能的处理要求。例如，传统的基于内核TCP/IP的网络处理逐渐被DPDK所取代，并且现在已经有网络处理完全硬件卸载的设备批量部署。
+###域间隔离和跨域访问
+&emsp;&emsp;VPC是CSP（云计算服务供应商，Cloud Service Provider）在数据中心中为用户提供的一个逻辑隔离的区域，用户可以在自己定义的的虚拟网络中创建云服务资源。底层的虚拟网络系统保证了不同用户网络区域的隔离。
+&emsp;&emsp;但是，不同的私有网络区域并不是完全封闭的，有些场景是需要跨域访问的。比如，一些非实例型独立“服务”提供的服务，当用户从自己的VPC访问另外某个VPC中服务的时候，通常有两种做法，一种是使用公网IP通过公网访问，还有一种方法就是通过提供一些特定的满足安全机制情况下的跨域访问服务来走数据中心内部网络路径去访问，以此来提升访问效率，这种就是数据中心内部的跨域访问。再比如，CSP的数据中心按照区域和可用区进行划分，用户在不同的跨区域的数据中心多地容灾、或者特定的服务和数据通信，则需要跨数据中心访问。
+&emsp;&emsp;通过VPC把不同用户或者系统的资源隔离，是为了安全的考虑；跨域访问，则是在保证安全基础上的性能和功能的考虑。
+##2.4 更多的租户
+&emsp;&emsp;多租户是云计算最显著的特点。它是在一定安全机制上让多个不信任方共享资源，同时给他们自己完全独占资源的“假象”。最形象的例子是公寓大楼，它给每个租户自己的空间，同时共享公共空间、安全性以及物业等资源。为使多租户模式得到用户的认可，每个租户的资源成本应小于专门拥有自己资源的成本。
+![Gartner弹性和多租户参考模型](/img/202010/Gartner弹性和多租户参考模型.png)
+<center>图4 Gartner弹性和多租户参考模型</center>
+&emsp;&emsp;如图4所示，Gartner给出了多种不同层次的多租户模型，有底层虚拟化层次的多租户，有基于操作系统、数据库、容器、应用等不同层次的多租户。在数据中心IaaS层，主要是基于硬件共享的虚拟化。通过虚拟网络技术构建VPC，为每个租户提供独立的资源域，然后创建虚拟机实例。CSP为满足不同租户个性化需求，提供了各种应用场景多种主机类型，为不同用户主机匹配个性化网络安全策略，并且针对不同租户设定不同的本地或远程存储盘的安全、加密和备份策略等等。
+&emsp;&emsp;要想更好的在一个云计算体系里支持更多的租户，并且以租户VPC域、服务实例、IO设备等为单位，提供更多个性化的服务支持，并且能够兼顾性能和成本，则需要硬件更细粒度虚拟化的支持。
+##2.5 安全问题无处不在
+&emsp;&emsp;在Mazhar Ali等人2015年发表的文章《Security in cloud computing: Opportunities and challenges》中，细致的总结了云计算安全所面临的挑战。
+&emsp;&emsp;除了与传统IT基础设施共享的风险之外，云服务的部署方式还引入了特定于云的安全风险和漏洞。云中的安全风险可能与传统IT基础设施的风险在性质或强度上有所不同。
+![云计算安全面临的挑战](/img/202010/云计算安全面临的挑战.png)
+<center>图4 云计算安全面临的挑战</center>
+&emsp;&emsp;资源池允许多用户通过虚拟化技术使用同一资源池。尽管这些技术引入了快速的弹性和资源的优化管理，但它们也给系统带来了一定的风险。如图5所示，通过网络通信安全、架构安全和合同法律三个领域来梳理云计算场景面临的安全挑战。
+###网络通信安全
+&emsp;&emsp;云的外部通信（客户与云之间）与Internet上的任何其他通信相似。因此，由于互联网特性，云所面临的挑战与传统的IT通信相同。这些挑战包括拒绝服务、中间人、窃听、基于IP欺骗的洪水和伪装。这些挑战的解决方案也与常规采用的解决方案相同，例如安全套接字层（SSL）、互联网安全协议（IPSec）、加密算法、入侵检测和防御系统、流量清理和数字证书。
+&emsp;&emsp;云内部的通信（发生在云基础架构内的通信）主要体现在：
+- 共享通信基础设施。资源池化不仅是计算和存储资源的共享，还是网络资源的共享。网络的共享为攻击者提供了跨租户攻击的可能性。
+- 虚拟网络。物理网络上的安全和保护机制无法监视虚拟网络上的流量。VM的潜在恶意活动超出了安全工具的监视范围，这成为一个严峻的挑战。
+- 安全配置错误。云网络基础设施的安全配置对于向用户提供安全的云服务至关重要。错误配置会从根本上损害客户、应用程序和整个系统的安全性。虚拟机、数据和应用程序在多个物理节点之间的迁移，流量模式以及拓扑结构的变化需要动态的管理各种安全策略，动态管理意味着时时刻刻都可能引发安全风险。
+###基础架构安全
+&emsp;&emsp;虚拟化允许多个客户使用相同的物理资源，为每个用户实例化一个单独的VM，从而允许在多租户环境中进行资源池化。虚拟化在镜像共享、资源隔离、迁移、虚机管理等方面给云用户和基础架构带来了一定的安全挑战。
+&emsp;&emsp;云计算模型无法为用户提供对数据的完全控制。云计算允许服务提供商行使控制权来管理服务器和数据。数据存储安全方面的挑战体现在：
+- 数据隐私和完整性。与传统计算模型相比，云的数据在机密性，完整性和可用性方面更容易受到风险的影响。除了静态数据之外，正在处理的数据也面临安全风险。云计算场景的密码密钥生成和管理机制，也使得数据加密增加潜在风险。
+- 数据恢复漏洞。由于资源池的弹性，会将之前用户的资源在一定的时间后再分配给其他用户。恶意用户可能会通过特殊的数据恢复技术来获取先前用户的数据。
+-存储介质销毁不当。当磁盘需要更换、数据不再需要以及终止服务的时候需要销毁介质。多租户会增加设备清理的风险，在某个用户共享的磁盘寿命周期结束时，可能并无法销毁它，因为其他某些租户可能还在使用。
+- 数据备份。需要定期备份数据，以确保在有意或意外灾难的情况下数据的可用性和及时恢复。此外，还需要保护备份存储，防止未经授权的访问和篡改。
+&emsp;&emsp;CSP通过Internet向云用户提供服务和应用程序。云应用程序继承了与传统Web应用程序和技术相同的漏洞。但是，传统的安全解决方案并不适用于云计算环境，因为云中Web应用程序中的漏洞可能比传统Web应用程序更具破坏性。多租户共存，使得问题变得更加严重。Web应用程序中的十大风险：注入（SQL，OS和LDAP）、身份认证和会话管理破坏、跨站脚本（XSS）、不安全的直接对象引用、安全配置错误、敏感数据暴露、缺少功能级别的访问控制、跨站请求伪造（CSRF）、使用已知的易受攻击的组件、无效的重定向和转发。Web应用程序的开发，管理和使用必须考虑上述风险。API桥接了用户和云中的服务，API的安全性极大地影响了云服务的安全性和可用性。
+&emsp;&emsp;在云环境中，数据和服务的机密性和完整性也与身份管理和访问控制联系在一起。跟踪用户的身份并控制未经授权的访问非常重要。与传统的IT设置不同，云可以使用不同的身份验证和授权框架，同时使用相同的物理资源来处理不同组织的用户。云服务具有弹性和动态性，经常重新分配IP地址，在较短的时间内启动或重新启动服务，按需付费功能使用户可以频繁创建和释放云资源。需要动态的、细粒度的并且严格的访问控制机制来防止未经授权的操作。
+##2.6 面向特定场景的云服务
+&emsp;&emsp;我们以AWS的服务为例。如图6，AWS提供了大量基于云的全球性产品，其中包括计算、存储、数据库、分析、联网、移动产品、开发人员工具、管理工具、物联网、安全性和企业应用程序。这些服务可帮助组织快速发展、降低 IT 成本以及进行扩展。很多大型企业和热门的初创公司都通过AWS，并通过这些服务为各种工作负载提供技术支持，其中包括 Web 和移动应用程序、游戏开发、数据处理与仓库、存储、存档及很多其他工作负载。
+![AWS产品服务分类](/img/202010/AWS产品服务分类.png)
+<center>图6 AWS产品服务分类</center>
+&emsp;&emsp;在前面我们提到，云服务是分层的。最底层的IaaS服务主要有计算、存储和网络三大类，上层的服务基本都是依赖于IaaS层服务的支持。我们深入分析底层承载服务的硬件服务器，在云计算中心中不同的服务器承担着不同的应用。例如有些是用于高性能计算场景，有的是用于机器学习场景，有的是用于内存数据库场景，有的是用于网络转发场景，有的是用于存储场景等等。不同的应用有着不同的特征，对底层硬件也有着不同的需求。
+&emsp;&emsp;当数据中心数百万台服务器规模的时候，具体到某个特定场景，依然有几十万台服务器的规模。如果针对不同应用场景进行优化，形成针对性的硬件支撑环境，将会充分发挥云计算中心的优势。规模加特定场景的共同作用，需要从体系结构上对服务器进行定制优化，云计算将重新定义服务器。
+##2.7 服务接口的兼容性和通用性
+&emsp;&emsp;受限于历史的原因，客户大都希望云服务都能够向前兼容，这样已有的系统可以无缝迁移到云。云服务是提供给各种不同类型的客户使用，要保证云服务提供的是通用的接口，才能够覆盖绝大部分用户的应用场景。例如，云计算场景最主流的操作系统是Linux，这样能兼容许多商业的、开源的软件系统，也能向前兼容很多旧版的软件系统。
+&emsp;&emsp;通过虚拟化技术为上层虚拟出完全一致的硬件平台：一致的处理器架构、一致的内存访问以及一致的IO接口设备。因为绝大部分服务器都是x86架构CPU，都支持VT-d的CPU和内存的完全硬件虚拟化，这样能够在不损耗性能的基础上还能够提供一致的处理器架构和内存访问。但受限于物理的设备通常有很多不同的类型，即使同种类型依然有很多不同的供应商，这导致形形色色不一致的访问接口。因此，在IO设备接口这块，一致性的访问接口主要是靠类虚拟化的技术来解决。Virtio是已经广泛应用的通过IO类虚拟化技术实现的接口标准。Virtio的基本思想是通过分层的方式，提供一个标准的软硬件接口，然后再在其之上封装网络、块存储、字符等各种特定设备类型的访问。这样实现的优势是可以最大限度的复用大部分设计，缺点是无法面向特定场景优化，效率较低。
+    </div>
+
+    
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/new-post/">
+            <span class="next-text nav-default">测试发布</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:chaoboo@126.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://www.zhihu.com/people/djistra" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.linkedin.com/in/huangcb/" class="iconfont icon-linkedin" title="linkedin"></a>
+  
+    <a href="https://cshca.github.io" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>cshca</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
