@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://cshca.github.io/sitemap.xml
