@@ -16,14 +16,5 @@
       <description></description>
     </item>
     
-    <item>
-      <title>测试发布</title>
-      <link>http://cshca.github.io/post/new-post/</link>
-      <pubDate>Mon, 05 Oct 2020 15:24:42 +0800</pubDate>
-      
-      <guid>http://cshca.github.io/post/new-post/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>
