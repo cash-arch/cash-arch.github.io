@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>软硬件融合 on CSHCA - Cloud Software &amp; Hardware Converaged Architecture</title>
+    <link>http://cshca.github.io/categories/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%9E%8D%E5%90%88/</link>
+    <description>Recent content in 软硬件融合 on CSHCA - Cloud Software &amp; Hardware Converaged Architecture</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 05 Oct 2020 16:21:14 +0800</lastBuildDate><atom:link href="http://cshca.github.io/categories/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%9E%8D%E5%90%88/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>云计算底层架构挑战（一）</title>
+      <link>http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%80/</link>
+      <pubDate>Mon, 05 Oct 2020 16:21:14 +0800</pubDate>
+      
+      <guid>http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%80/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
