@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>云计算底层架构挑战（三） - CSHCA - Cloud Software &amp; Hardware Converaged Architecture</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cshca" /><meta name="description" content="" /><meta name="keywords" content="cloud, software, hardware, converaged, architecture" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
+
+
+<link rel="canonical" href="http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%89/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.319b99293182aa5d023be568b3d5d2020f5693f288f58e6bd3e0b5457df8bdc1.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="云计算底层架构挑战（三）" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://cshca.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%B8%89/" />
+<meta property="article:published_time" content="2020-10-07T19:47:26+08:00" />
+<meta property="article:modified_time" content="2020-10-07T19:47:26+08:00" />
+<meta itemprop="name" content="云计算底层架构挑战（三）">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2020-10-07T19:47:26+08:00" />
+<meta itemprop="dateModified" content="2020-10-07T19:47:26+08:00" />
+<meta itemprop="wordCount" content="7941">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="云计算底层架构挑战（三）"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">软硬件融合</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">文章</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">软硬件融合</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">文章</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">云计算底层架构挑战（三）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-07 </span>
+        <div class="post-category">
+            <a href="/categories/%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%9E%8D%E5%90%88/"> 软硬件融合 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    
+    <div class="post-content">
+      <h1 id="4-云计算底层架构新趋势">4 云计算底层架构新趋势</h1>
+<p>  就互联网场景而言，芯片公司距离市场和业务场景较远，自身对芯片级微观系统理解非常深入，但对互联网系统则缺乏深层次的敏感度，对新的热点方向布局有点“闭门造车”，很多高精尖技术难以落地。而互联网公司虽然距离客户近，有宏观大系统的整体视角，但缺乏硬件技术储备，对硬件技术的理解比较肤浅，局限于一些“隔靴搔痒”的硬件浅层优化。</p>
+<p>  为了解决这一问题，互联网公司纷纷通过自研或者跟IC公司合作的方式，更深入的融合软件和硬件的发展特点，研发符合互联网场景的新的芯片及硬件产品，以此支撑更加复杂、更加规模庞大、更加自动化管理、更加智能化的互联网基础设施和应用系统。</p>
+<p>  很多云计算厂家，包括亚马逊、谷歌、微软、阿里、华为、腾讯、UCloud等企业，都开始从硬件方面挖潜，深入探索并产生了很多创新的芯片设计及相关的硬件解决方案。</p>
+<h2 id="41-云计算管理aws-nitro系统">4.1 云计算管理：AWS NITRO系统</h2>
+<p>  NITRO系统是新一代EC2实例的基础平台，通过专用硬件和轻量级Hypervisor结合，它使得AWS能够更快地进行创新，进一步的降低客户成本，并带来更多好处，例如增强的安全性和新的实例类型。</p>
+<p>  AWS完全重构了虚拟化基础架构。传统的Hypervisor可以保护物理硬件和BIOS、虚拟化CPU、存储、网络并提供丰富的管理功能。借助NITRO系统来分解这些功能，将其分流到专用的硬件和软件，并通过将服务器的几乎所有资源交付给用户实例来降低成本。</p>
+<p>  Nitro系统用于为AWS Elastic Compute Cluster（EC2）实例类型提供以下功能：高速网络硬件卸载；高速EBS存储硬件卸载；NVMe本地存储；远程直接内存访问(RDMA)；裸金属实例的硬件保护/固件验证；控制EC2实例所需的所有业务逻辑。</p>
+<p>  NITRO给AWS带来的好处：</p>
+<ul>
+<li>更快的创新。NITRO系统是一个丰富的基础组件集合，可以通过许多不同的方式进行组装，从而使AWS能够灵活设计和快速交付EC2实例类型，并且具有越来越丰富的计算、存储、内存和网络选项选择。这种创新还产生了新的“裸金属”实例，客户可以通过虚拟化Hypervisor来虚拟化自己的裸金属实例，也可以没有Hypervisor，完全当做物理机来使用。</li>
+<li>增强安全性。NITRO系统提供了增强的安全性，可以连续监视，保护和验证实例硬件和固件。虚拟化资源被转移到专用的硬件和软件上，以最大程度地减少攻击面。最后，NITRO系统的安全模型被锁定并禁止管理访问，从而消除了人为错误和篡改的可能性。</li>
+<li>更好的性能和价格。NITRO系统实际上将主机硬件的所有计算和内存资源提供给您的实例，从而提高了整体性能。此外，专用的NITRO卡可实现高速联网，高速EBS和IO加速。CPU不必保留用于管理软件的资源，意味着可以节省更多的钱，这些钱可以转嫁给客户。</li>
+</ul>
+<center><img src="/img/202010/NITRO系统架构.png" /></center>
+<center>图7 NITRO系统架构</center>
+<p>  如图7，NITRO的物理形态为在服务器上的若干扩展板卡，通过不同的板卡组合，使得不同的EC2服务器实例类型实现不同的NITRO系统功能。这些卡分别实现了AWS NITRO系统的五个主要功能：</p>
+<ul>
+<li>VPC NITRO卡。用于VPC的NITRO卡本质上是一个PCIe连接的网络接口卡。VPC NITRO卡的设备驱动程序是弹性网络适配器（ENA），该驱动程序已包含在所有主要的操作系统和发行版中。NITRO VPC卡支持网络数据包封装/解封装，实现EC2安全组，强制执行限制并负责路由。</li>
+<li>EBS NITRO卡。用于EBS的NITRO卡支持EBS的存储加速。所有实例存储均以NVMe 设备的形式实现，并且EBS的NITRO卡支持透明加密，还支持裸金属实例类型。远程存储再次实现为NVMe设备，即使在裸金属环境中，也支持再次通过加密访问EBS卷，并且又不影响其他EC2用户和安全性。</li>
+<li>用于实例的本地存储的Nitro卡。用于实例存储的NITRO卡还为本地EC2实例存储实现了NVMe。</li>
+<li>NITRO控制器。NITRO卡控制器可协调所有其他NITRO卡、服务器Hypervisor和NITRO安全芯片。它使用NITRO安全芯片实现了信任的硬件根，并支持实例监视功能。它还为一个或多个用于EBS的NITRO卡实现了NVMe控制器功能。</li>
+<li>NITRO安全芯片。NITRO安全芯片将所有IO捕获到非易失性存储中，包括BIOS和服务器上所有IO设备固件以及任何其他控制器固件。这是一种非常简洁的安全方法，通用CPU根本无法更改任何固件或设备配置。NITRO安全芯片还实现了信任的硬件根。该系统替代了数千万行用于UEFI并支持安全启动的代码。在启动服务器时，将其置于不受信任的状态，然后监测服务器上的每个固件系统，以确保未对它们进行任何未经授权的修改或更改。</li>
+</ul>
+<p>  另外，NITRO系统还实现了一个非常简单、轻量的Hypervisor，该Hypervisor通常处于静态状态，它使得AWS能够安全地支持裸金属实例类型。</p>
+<h2 id="42-ai加速谷歌tpu">4.2 AI加速：谷歌TPU</h2>
+<p>  TPU（Tensor Processing Unit，张量处理单元）是Google定制开发的ASIC芯片，用于加速机器学习工作负载。用户可以使用Cloud TPU和TensorFlow在Google的TPU加速器硬件上运行自己的机器学习工作负载。Cloud TPU资源提高了机器学习应用中大量使用的线性代数计算的性能。在训练大型复杂的神经网络模型时，TPU可以最大限度地缩短达到准确率所需的时间。以前在其他硬件平台上需要花费数周时间进行训练的模型，在TPU中只需数小时即可收敛。用户的TensorFlow应用可以通过 Google Cloud平台上的容器、实例或服务访问TPU节点。该应用需要通过用户自己的 VPC网络连接到TPU节点。</p>
+<p>  在2013年的一项预测显示，人们每天使用语音识别DNN进行语音搜索三分钟，这将使数据中心的计算需求增加一倍，而使用传统的CPU成本非常昂贵。因此，谷歌启动了一个高优先级项目，以快速生成用于推理的自研ASIC。目标是将GPU的性价比提高10倍。</p>
+<p>  为了降低延迟部署的风险，TPU 1.0并没有与CPU集成，而是设计为PCIe总线上的协处理器，从而可以像GPU一样插入现有服务器。此外，为了简化硬件设计和调试，Host服务器发送指令驱动TPU执行。因此，TPU更接近于FPU协处理器，而不是GPU。TPU设计为运行整个推理模型，以减少与主机CPU的交互，并具有足够的灵活性以适应未来的神经网络需求。</p>
+<center><img src="/img/202010/TPU 1.0结构图.png" /></center>
+<center>图8 TPU 1.0结构图</center>
+<p>  如图8，显示了TPU的结构框图。TPU指令通过PCIe Gen3 x16总线从Host发送到TPU的指令缓冲区。内部模块通常通过256字节宽的总线连接在一起。开始在右上角，矩阵乘法单元是TPU的核心，它包含256x256 MAC，可以对有符号或无符号整数执行8位乘加，16位乘积收集在矩阵单元下方的4 MB 32位累加器中。4 MB可容纳4096个256元素的32位累加器。矩阵单元每个时钟周期产生一个256个元素的部分和。</p>
+<p>  MMU（矩阵乘法单元）在每个时钟周期中读写256个值，可以执行矩阵乘法或卷积运算。矩阵单元包含一个64 KB的权重块和一个用于双缓冲的权重块(隐藏将一个块移位所需的256个周期)。TPU是为密集矩阵设计的，由于部署时间的原因，省略了稀疏架构支持。矩阵单元的权重通过片内权重FIFO进行分段，该FIFO从片外的8GB DRAM的权重存储器中读取。权重FIFO是4个块的深度，中间结果保存在24 MB片上的统一缓冲区中，可以作为矩阵单元的输入。一个可编程的DMA控制器在CPU内存和统一缓存区之间搬运数据。</p>
+<p>  当指令通过PCIe总线发送时，TPU指令设计为CISC（复杂指令集计算机）类型，包括一个重复域。这些CISC类型指令的CPI（Cycles per Instruction，每条指令的平均时钟周期）通常为10到20。总共大约有十二条指令，主要的五个指令是：</p>
+<ul>
+<li>Read_Host_Memory。将数据从CPU内存读取到统一缓冲区（UB）中。</li>
+<li>Read_Weights。将权重从权重存储器读取到权重FIFO中，作为矩阵单元的输入。</li>
+<li>MatrixMultiply / Convolve。让矩阵单元执行矩阵乘法或执行从统一缓存区到累加器的卷积。矩阵运算采用大小可变的B<em>256输入，然后将其乘以256x256恒定的权重输入，然后生成B</em>256输出，需要B个流水线周期才能完成。</li>
+<li>Activate。根据ReLU，Sigmoid等选项，执行人工神经元的非线性功能。它的输入是累加器，其输出是统一缓冲区。当连接到非线性函数逻辑时，还可以使用芯片上的专用硬件执行卷积所需的池化操作。</li>
+<li>Write_Host_Memory 将数据从统一缓冲区写入CPU内存。
+其他指令包括备用Host内存读写、组配置、两个版本的同步、中断主机、调试标签、空指令NOP和停顿Halt。</li>
+</ul>
+<p>  TPU软件堆栈必须与CPU和GPU版本的兼容，以便可以将应用程序快速移植到TPU。在TPU上运行的应用程序通常用TensorFlow编写，并编译成可以在GPU或TPU上运行的API。像GPU一样，TPU软件堆栈分为用户空间驱动程序和内核驱动程序。内核驱动程序是轻量级的，仅处理内存管理和中断。专为长期稳定性而设计。用户空间驱动程序则经常更改。它设置并控制TPU执行，并且将数据重新格式化为TPU顺序，把API调用翻译成TPU指令，并将指令转换为应用程序二进制文件。大多数模型可以完整的在TPU运行，从而最大化的优化TPU计算时间与IO时间的比率。</p>
+<center><img src="/img/202010/CPU、GPU和TPU的Roofline组合图.png" /></center>
+<center>图9 CPU、GPU和TPU的Roofline组合图</center>
+<center>（★代表TPU，▲代表K80 GPU，●代表Haswell CPU）</center>
+<p>  如图9，对于HPC来说，Y轴是每秒浮点运算的性能，X轴是操作强度，用访问的每个DRAM字节的浮点操作来衡量。峰值计算速率就是Roofline的“平坦”部分，内存带宽是每秒字节数，因此变成了Roofline的“倾斜”部分。从图中，我们可以看到，所有TPU星星均位于CPU和GPU的Roofline之上。从Roofline的平坦部分可以看出，TPU的处理速度比GPU和CPU要快15-30倍。</p>
+<center><img src="/img/202010/CPU、GPU和TPU的性能功耗比.png" /></center>
+<center>图10 CPU、GPU和TPU的性能功耗比</center>
+<p>  如图10，其中的TPU’是 使用了GDDR5存储的改进型。可以看到，相比CPU性能提升196倍，相比GPU性能提升68倍。</p>
+<p>  谷歌随后又开发了TPU 2.0、3.0版本。TPU 1.0的性能峰值达是92Tops，而TPU2.0性能峰值达到180Tflops，TPU3.0更是达到了420Tflops。并且，从TPU 2.0开始，TPU不再是作为一个加速卡应用于通用服务器，而是定制的TPU集群，这样会更大限度的发挥TPU的加速价值。</p>
+<h2 id="43-存储服务器微软pelican">4.3 存储服务器：微软Pelican</h2>
+<p>  微软Pelican项目定制了一款整机柜级定制冷存储服务器。Pelican冷存的目标是成本和磁带接近，但性能远高于磁带。</p>
+<center><img src="/img/202010/Pelican整机柜冷存储服务器.png" /></center>
+<center>图11  Pelican整机柜冷存储服务器</center>
+<p>  Pelican通过如下几个措施来实现这一目标：</p>
+<ul>
+<li>磁盘：如图10(b)所示，使用新式的SMR归档型磁盘，1152磁盘。整机柜52U，其中48U用于磁盘阵列，平均24盘每U。提供5PB以上的存储容量。</li>
+<li>功耗：归档型磁盘支持Spin Up/Down，通过一定的软件调度，在同一时刻，只有约8%的磁盘处于Spin up状态，其他磁盘均处于Spin down状态。</li>
+<li>散热：如图10(b)所示，整个机柜没有散热风扇，通过特定的规则把磁盘分散的划分成若干个散热域，每个散热域里的磁盘尽可能远的分散到整个立体阵列里，在特定域的某个磁盘Spin up工作的时候，周围的磁盘都是处于Spin down状态的，这样散热相对较小。然后通过如图空气导流槽把热量逐步传递出去。</li>
+<li>服务器：两台1U的服务器计算节点，一方面可以增加带宽，更一方面可以提供服务器硬件高可用，当一台服务器故障的时候，依然能够提供50%的服务能力。整机柜磁盘只需要两个1U的服务器，提供非常高密度的磁盘。</li>
+<li>带宽：两台双口服务器提供总计40Gbps的网络带宽。通过调度算法，在保证所有带宽都线速的情况下，让尽可能少的磁盘处于工作状态。</li>
+</ul>
+<center><img src="/img/202010/Pelican调度算法.png" /></center>
+<center>图12  Pelican调度算法</center>
+<p>  如图11所示，为了充分利用归档型磁盘的低功耗特点，Pelican设计了多个任务，分别对应按照散热规则划分的硬件磁盘组，在任一时刻，只有一个磁盘组处于工作状态，磁盘组根据Round-Robin算法进行进一步调度。因为磁盘spin up有一定的延迟时间，可以认为有一定的调度代价，这样把每个任务设置成任务队列的方式，可以批处理一批任务，以此来降低平均的调度代价。</p>
+<p>  另外，Pelican还使用了Erasure coding算法，纠删码算法可以保证尽可能低的磁盘用量。传统的分布式存储采取写三份的方式磁盘利用率为1/3，RAID1磁盘利用率为1/2，而EC算法的磁盘占用可以达到0.75以上。EC算法是典型的时间换空间策略，冷存储一旦写入会很少读取，那么采取EC这样的时间换空间策略就非常值得。</p>
+<h2 id="44-数据面编程交换机barefoot-p4-asic">4.4 数据面编程交换机：Barefoot P4 ASIC</h2>
+<h3 id="p4数据面可编程">P4，数据面可编程</h3>
+<p>  随着SDN技术的进一步发展，逐步的发现了OpenFlow的一些局限之处。最大的局限，就是OpenFlow没有做到协议无关，OpenFlow只能依据现有的协议来定义流表项。</p>
+<p>  OpenFlow 接口一开始很简单，只抽象了单个规则表，并且表中只能在数据包特定的十二个包头字段上进行匹配（比如MAC地址、IP地址、载荷协议类型、TCP/UDP端口等等）。在过去的几年中，协议标准已经演进得越来越复杂，OpenFlow1.4的时候字段增加到41个。归结起来就是支持匹配越来越多的首部区域和支持多级的规则表，由此能够允许交换机向控制器暴露出它们更多的能力。
+  新的包头字段增多并没有表露出任何即将结束的迹象。相比持续地扩展OpenFlow 的协议标准，未来的交换机应该为包解析和包头字段匹配支持灵活的机制，允许控制器应用通过一个通用的开放的接口利用交换机的这些能力。</p>
+<center><img src="/img/202010/P4是用来配置交换机的语言.png" /></center>
+<center>图13  P4是用来配置交换机的语言</center>
+<p>  P4 (Programming Protocol-Independent Packet Processors)是一种面向网络数据面编程的高级语言。图12展示了P4和已有的协议接口之间的关系。P4用来配置交换机，告诉它们应该如何处理数据包。已有的协议接口（例如OpenFlow）负责将转发表送入固定功能的交换机。P4提升了网络编程的抽象等级，可以作为控制器和交换机之间的通用接口。未来的OpenFlow协议应该允许控制器“告诉交换机如何去做”，而不受交换机设计的局限。关键的挑战是要找到一个平衡点，它既能够“灵活表达多种控制意愿的特性需求”，还能够“在大范围的软硬件交换机上低难度的实现”。</p>
+<p>  P4有三个主要的目标：</p>
+<ul>
+<li>重配置能力：控制器应该能够重新定义数据包的包解析过程和对包头字段的处理过程。</li>
+<li>协议无关性：交换机不应该与特定的包格式绑定。相反地，控制器应该能够指定：
+<ol>
+<li>一个能提取出特定名称和类型的包头字段的包解析器；</li>
+<li>一个类型化的“匹配–动作”表的集合，用于处理包头字段。</li>
+</ol>
+</li>
+<li>目标无关性：控制器的开发者不必知道底层交换机的细节。而是P4编译器将目标无关的P4描述转换成目标相关的用来配置交换机的程序时，才应该去考虑交换机的能力。</li>
+</ul>
+<center><img src="/img/202010/P4的抽象转发模型.png" /></center>
+<center>图14  P4的抽象转发模型</center>
+<p>  如图13中P4的抽象转发模型（接下来简称P4模型），交换机通过一个可编程的解析器和随后的多阶段的“匹配–执行动作”的流程组合转发数据包，其中“匹配–执行动作”的过程可以是串行的、并行的或者是二者结合的。与OpenFlow对比，P4模型包含三个特点。首先，OpenFlow假设有一个固定的包解析器，P4模型能够支持可编程的包解析器，允许定义新的包头字段。第二，OpenFlow假设“匹配–执行动作”的各个阶段是串行的，而P4模型允许并行或串行。第三，P4模型假设“动作”是使用交换机所支持的协议无关的原语编写而成的。</p>
+<p>  P4模型将数据包如何在不同的转发设备上（例如以太网交换机、负载均衡器、路由器）被不同的技术（例如固定功能的ASIC交换芯片、NPU、可重配置的交换机、软件交换机、FPGA等）进行处理的问题通用化。这就使得能够用一门通用的语言来描绘通用的P4模型来处理数据包。因此，开发者可以开发目标无关的程序，开发者可以映射P4程序到不同的转发设备中，这些设备可以是相当慢的软件交换机，也可以是最快速的基于ASIC芯片的交换机。</p>
+<h3 id="barefoot-p4可编程交换机asic芯片">Barefoot, P4可编程交换机ASIC芯片</h3>
+<p>  Barefoot的目标是使对网络的编程与和CPU编程一样简单。当网络是完全可编程的（即控制平面和数据平面都在最终用户的控制之下）时，网络行业将享有与软件一样飞速的发展。</p>
+<p>  在Barefoot看来，虽然已经存在NPU和FPGA，可以修改网络协议和编辑数据包，并为那些知道如何编写微代码或RTL的人员提供适度的可编程性。但是它们是ASIC性能的1/100。因此，NPU和FPGA只能在性能不敏感的地方找到用武之地。Barefoot为网络行业提供两全其美的解决方案：可编程性数据平面协议，并且达到行业最高速度。Barefoot不仅开发了全球第一个比传统ASIC还要更快的可编程交换机芯片，而且还使得网络编程变得容易并且通用。</p>
+<p>  Barefoot与Google、Intel、Microsoft、Princeton及Stanford合作，开发了用于编程网络的开源网络编程语言P4。程序员可以基于P4编程一次来描述网络行为，然后编译程序以在各种不同的平台上运行。P4为网络设备制造商和网络所有者提供了差异化的手段，可以使产品或整个网络比竞争对手更好。</p>
+<p>  这与当前的情况形成了鲜明对比，如果用户想向网络添加新功能，则必须与芯片供应商共享该功能，并看到它也出现在竞争对手的网络中，从而打败了差异化的目的。设备制造商也不愿意添加新功能。添加新功能需要花费几年的时间，然后竞争优势却很短暂。这导致一些公司倾向于开发特有的固定功能ASIC，以保持领先地位。</p>
+<center><img src="/img/202010/像CPU编译器一样的网络编译器.png" /></center>
+<center>图15  像CPU编译器一样的网络编译器</center>
+<p>  如图14所示，可编程性长期存在于计算、图形、数字信号处理以及特定领域处理器中，从而使蓬勃发展的开发人员社区能够快速创新并编写以最终用户为中心的解决方案。Barefoot的PISA体系结构可以像DSP、GPU以及TPU那样，它将完全控制权交给网络所有者。</p>
+<p>  为此，Barefoot首先确定了一个小规模的原语指令集来处理数据包，总共约11条指令以及如图15所示的一个非常统一的可编程流水线来快速连续地处理数据包头。程序使用高级领域特定语言P4编写，然后由Barefoot Capilano编译器进行编译，并经过优化以在PISA设备上以全线速运行。通过这样做，Barefoot的目标是使网络更加敏捷、灵活、模块化且成本更低。</p>
+<center><img src="/img/202010/PISA交换机结构.png" /></center>
+<center>图15  PISA交换机结构</center>
+<p>  Barefoot认为，网络系统正朝着由三层构成的方向发展：在底部是一个P4可编程的Tofino交换机，在上面是一个基于Linux的操作系统，在上面是专有的控制平面应用程序。Barefoot的价值主张是为整个行业提供最快、可编程性最高、经过P4优化的交换机硬件。</p>
+<h1 id="参考文献">参考文献</h1>
+<ol>
+<li>Cloud Application Architectures, George Reese, O’Reilly Media, 2009</li>
+<li>Data age 2025 White Paper, David Reinsel, John Gantz, John Rydning, by Seagate and IDC, 2018.11, <a href="https://www.seagate.com/www-content/our-story/trends/files/idc-seagate-dataage-whitepaper.pdf">https://www.seagate.com/www-content/our-story/trends/files/idc-seagate-dataage-whitepaper.pdf</a></li>
+<li>Latency, Bandwidth and the New Data Center Network, compassdatacenters.com</li>
+<li>In Modern Datacenters, The Latency Tail Wags The Network Dog, <a href="https://www.nextplatform.com/2018/03/27/in-modern-datacenters-the-latency-tail-wags-the-network-dog/">https://www.nextplatform.com/2018/03/27/in-modern-datacenters-the-latency-tail-wags-the-network-dog/</a></li>
+<li>重构网络：SDN架构与实现，杨泽卫、李呈著，电子工业出版社，2017</li>
+<li>Security in cloud computing: Opportunities and challenges, Mazhar Ali, Samee U. Khan, Athanasios V. Vasilakos, Information sciences, 2015 - Elsevier</li>
+<li>Intel® Open Network Platform Release 2.1, <a href="https://download.01.org/packet-processing/ONPS2.1/Intel_ONP_Release_2.1_Performance_Test_Report_Rev1.0.pdf">https://download.01.org/packet-processing/ONPS2.1/Intel_ONP_Release_2.1_Performance_Test_Report_Rev1.0.pdf</a></li>
+<li>Three Ways ASAP2 Beats DPDK for Cloud and NFV, <a href="https://blog.mellanox.com/2016/12/three-ways-asap2-beats-dpdk-for-cloud-and-nfv/">https://blog.mellanox.com/2016/12/three-ways-asap2-beats-dpdk-for-cloud-and-nfv/</a></li>
+<li>AWS Nitro System, <a href="https://amazonaws-china.com/cn/ec2/nitro/">https://amazonaws-china.com/cn/ec2/nitro/</a></li>
+<li>AWS EC2 Virtualization 2017: Introducing Nitro, Brendan Gregg, <a href="http://www.brendangregg.com/blog/2017-11-29/aws-ec2-virtualization-2017.html">http://www.brendangregg.com/blog/2017-11-29/aws-ec2-virtualization-2017.html</a></li>
+<li>AWS Nitro System, James Hamilton, <a href="https://perspectives.mvdirona.com/2019/02/aws-nitro-system/">https://perspectives.mvdirona.com/2019/02/aws-nitro-system/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tensor_processing_unit">https://en.wikipedia.org/wiki/Tensor_processing_unit</a></li>
+<li>A Domain-Specific Architecture for Deep Neural Networks, By Norman P. Jouppi, Cliff Young, Nishant Patil, David Patterson, Communications of the ACM, September 2018, Vol. 61</li>
+<li>In-Datacenter Performance Analysis of a Tensor Processing Unit, Norman P. Jouppi, Cliff Young, Nishant Patil, David Patterson, et al., In Proceedings of ISCA ’17</li>
+<li>An in-depth look at Google’s first Tensor Processing Unit (TPU), Kaz Sato, Cliff Young, David Patterson, 2017.5, <a href="https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu">https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu</a></li>
+<li>HotStorage 2017, Understanding Rack-Scale Disaggregated Storage, Sergey Legtchenko, Hugh Williams, etc., Microsoft Research</li>
+<li>HotStorage 2016, Feeding the Pelican: using archival hard drives for cold storage racks, Richard Black, Austin Donnelly, etc., Microsoft Research</li>
+<li>OSDI 2014, Pelican: A building block for exascale cold data storage, Shobana Balakrishnan, Richard Black, Microsoft Research</li>
+<li>P4: Programming Protocol-Independent Packet Processors, Pat Bossharty, Nick McKeown, etc., ACM SIGCOMM Computer Communication Review, July 2014</li>
+<li>The World&rsquo;s Fastest &amp; Most Programmable Networks, Barefoot White Paper, <a href="http://www.barefootnetworks.com">www.barefootnetworks.com</a></li>
+</ol>
+    </div>
+
+    
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E6%8C%91%E6%88%98%E4%BA%8C/">
+            <span class="next-text nav-default">云计算底层架构挑战（二）</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:chaoboo@126.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://www.zhihu.com/people/djistra" class="iconfont icon-zhihu" title="zhihu" target="_blank"></a>
+      <a href="https://www.linkedin.com/in/huangcb/" class="iconfont icon-linkedin" title="linkedin" target="_blank"></a>
+  
+    <a href="https://cshca.github.io" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020<span class="heart"><i class="iconfont icon-heart"></i></span><span>cshca</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
