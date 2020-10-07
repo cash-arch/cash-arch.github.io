@@ -2,28 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cshca.github.io/categories/</loc>
+    <lastmod>2020-10-07T19:47:26+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://cshca.github.io/</loc>
-    <lastmod>2020-10-07T22:26:25+08:00</lastmod>
+    <lastmod>2020-10-07T19:47:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://cshca.github.io/post/</loc>
-    <lastmod>2020-10-07T22:26:25+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://cshca.github.io/post/test/</loc>
-    <lastmod>2020-10-07T22:26:25+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://cshca.github.io/categories/</loc>
     <lastmod>2020-10-07T19:47:26+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
